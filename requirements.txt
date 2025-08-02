@@ -1,6 +1,6 @@
-fastf1 
-flask 
-scikit-learn 
-joblib 
-pandas 
+flask
+fastf1
+scikit-learn
+joblib
 numpy
+pandas
