@@ -33,7 +33,11 @@ def predict_race_positions(data):
 
         X = best_laps[features]
         predictions = model.predict(X)
-        best_laps['PredictedPosition'] = predictions.round(0).astype(int)
+        
+        # Sort by predicted performance (lower predicted position is better)
+        best_laps['RawPrediction'] = predictions
+        best_laps = best_laps.sort_values('RawPrediction')
+        best_laps['PredictedPosition'] = range(1, len(best_laps) + 1)
 
         output = best_laps[['Driver', 'Team', 'PredictedPosition']].to_dict(orient='records')
         return jsonify(output)
