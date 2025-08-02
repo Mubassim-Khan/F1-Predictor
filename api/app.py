@@ -1,7 +1,9 @@
 from flask import Flask, request
+from flask_cors import CORS
 from predict import predict_race_positions
 
 app = Flask(__name__)
+CORS(app) 
 
 @app.route('/predict', methods=['POST'])
 def predict():

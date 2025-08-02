@@ -7,7 +7,7 @@ document.getElementById("predictForm").addEventListener("submit", async (e) => {
   resultsBox.textContent = "Fetching predictions...";
 
   try {
-    const response = await fetch("http://localhost:5000/predict", {
+    const response = await fetch("https://ideal-space-dollop-5g95v9qv9v4vcp477-5000.app.github.dev/predict", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ year: parseInt(year), gp })
