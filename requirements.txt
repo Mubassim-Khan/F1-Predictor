@@ -1,0 +1,6 @@
+fastf1 
+flask 
+scikit-learn 
+joblib 
+pandas 
+numpy
