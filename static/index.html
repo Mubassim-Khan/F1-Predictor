@@ -2,20 +2,51 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>F1 Predictor</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F1 Prediction App</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <h2>Predict F1 Grand Prix Results</h2>
-  <form id="predictForm">
-    <label>Year: <input type="number" id="year" required></label><br><br>
-    <label>Grand Prix: <input type="text" id="gp" required></label><br><br>
-    <button type="submit">Predict</button>
-  </form>
+  <div class="container">
+    <h1>🏁 F1 Position & LapTime Predictor</h1>
 
-  <h3>Predictions:</h3>
-  <pre id="results"></pre>
+    <form id="predictForm">
+      <div class="form-row">
+        <label for="year">Year:</label>
+        <select id="year" required></select>
+      </div>
+
+      <div class="form-row">
+        <label for="gp">Grand Prix:</label>
+        <select id="gp" required></select>
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit">Predict</button>
+        <button type="button" id="resetBtn">Reset</button>
+      </div>
+    </form>
+
+    <div id="loading" class="spinner hidden"></div>
+    <div id="errorBox" class="error hidden"></div>
+    <div id="resultsTableContainer" class="hidden">
+      <table id="resultsTable">
+        <thead>
+          <tr>
+            <th>Predicted Position</th>
+            <th>Driver</th>
+            <th>Team</th>
+            <th>Lap Time</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="driverDetails" class="side-panel hidden"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>

@@ -10,6 +10,13 @@ features = [
     'Deleted', 'Sector1Time_sec', 'Sector2Time_sec', 'Sector3Time_sec', 'LapTime_sec', 'GridPosition'
 ]
 
+def format_laptime(seconds):
+    if pd.isna(seconds):
+        return None
+    minutes = int(seconds // 60)
+    secs = seconds % 60
+    return f"{minutes}:{secs:05.2f}"
+
 def predict_race_positions(data):
     try:
         year = data.get("year")
@@ -17,6 +24,11 @@ def predict_race_positions(data):
 
         session = get_session(year, gp, 'Q')
         session.load()
+
+        # Check if session has data
+        if session.laps.empty:
+            return jsonify({"error": f"No qualifying data available yet for {gp} {year}."}), 400
+
         laps = session.laps.pick_quicklaps()
 
         best_laps = laps.sort_values("LapTime").groupby("Driver", as_index=False).first()
@@ -33,14 +45,21 @@ def predict_race_positions(data):
 
         X = best_laps[features]
         predictions = model.predict(X)
-        
-        # Sort by predicted performance (lower predicted position is better)
+
         best_laps['RawPrediction'] = predictions
         best_laps = best_laps.sort_values('RawPrediction')
         best_laps['PredictedPosition'] = range(1, len(best_laps) + 1)
 
-        output = best_laps[['Driver', 'Team', 'PredictedPosition']].to_dict(orient='records')
-        return jsonify(output)
+        output = []
+        for _, row in best_laps.iterrows():
+            output.append({
+                "Driver": row["Driver"],
+                "Team": row["Team"],
+                "PredictedPosition": int(row["PredictedPosition"]),
+                "PredictedLapTime": format_laptime(row["LapTime_sec"])  # Converted lap time
+            })
+
+        return output
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
