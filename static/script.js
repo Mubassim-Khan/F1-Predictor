@@ -9,6 +9,10 @@ let loadingMsgTimeouts = [];
 const resetBtn = document.getElementById("resetBtn");
 const driverDetails = document.getElementById("driverDetails");
 
+const BackendURL =
+  "https://ideal-space-dollop-5g95v9qv9v4vcp477-5000.app.github.dev" ||
+  "http:localhost:5000";
+
 // Populate year and GP options
 const currentYear = new Date().getFullYear();
 for (let y = 2022; y <= currentYear; y++) {
@@ -70,14 +74,11 @@ form.addEventListener("submit", async (e) => {
     data = predictCache[cacheKey];
   } else {
     try {
-      const res = await fetch(
-        "https://ideal-space-dollop-5g95v9qv9v4vcp477-5000.app.github.dev/predict",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ year, gp }),
-        }
-      );
+      const res = await fetch(`${BackendURL}/predict`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ year, gp }),
+      });
 
       const result = await res.json();
       if (!res.ok || result.error) {
@@ -126,6 +127,44 @@ form.addEventListener("submit", async (e) => {
   resultsContainer.classList.remove("hidden");
   loading.classList.add("hidden");
   clearLoadingMessages();
+
+  // Fetch and display circuit map
+  const circuitMapContainer = document.getElementById("circuitMapContainer");
+  const circuitMapHeading = document.getElementById("circuitMapHeading");
+  const circuitMapImg = document.getElementById("circuitMapImg");
+  circuitMapContainer.classList.add("hidden");
+  circuitMapImg.src = "";
+  circuitMapHeading.textContent = "";
+  fetch(`${BackendURL}/circuit-map`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ year, gp }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      circuitMapHeading.textContent = `Circuit Map with Numbered Corners: ${gp}`;
+      circuitMapImg.src = data.img_url;
+      circuitMapContainer.classList.remove("hidden");
+    });
+
+  // Fetch and display gear shift graph
+  const gearShiftContainer = document.getElementById("gearShiftContainer");
+  const gearShiftHeading = document.getElementById("gearShiftHeading");
+  const gearShiftImg = document.getElementById("gearShiftImg");
+  gearShiftContainer.classList.add("hidden");
+  gearShiftImg.src = "";
+  gearShiftHeading.textContent = "";
+  fetch(`${BackendURL}/gear-shifts`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ year, gp }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      gearShiftHeading.textContent = `Gear Shifts Used Around the Circuit (Fastest Lap)`;
+      gearShiftImg.src = data.img_url;
+      gearShiftContainer.classList.remove("hidden");
+    });
 });
 
 // Reset Button
@@ -203,7 +242,7 @@ document.addEventListener("click", async (e) => {
     } else {
       try {
         const statsRes = await fetch(
-          `https://ideal-space-dollop-5g95v9qv9v4vcp477-5000.app.github.dev/driver-stats?driver=${driverAbbr}`
+          `${BackendURL}/driver-stats?driver=${driverAbbr}`
         );
         stats = await statsRes.json();
         driverStatsCache[driverAbbr] = stats;
