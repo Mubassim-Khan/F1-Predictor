@@ -1,54 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>F1 Prediction App</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>F1 Prediction App</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
+  <body>
+    <div class="container">
+      <h1>🏁 F1 Position & LapTime Predictor</h1>
 
-<body>
-  <div class="container">
-    <h1>🏁 F1 Position & LapTime Predictor</h1>
+      <form id="predictForm">
+        <div class="form-row">
+          <label for="year">Year:</label>
+          <select id="year" required class="styled-select"></select>
+        </div>
 
-    <form id="predictForm">
-      <div class="form-row">
-        <label for="year">Year:</label>
-        <select id="year" required></select>
+        <div class="form-row">
+          <label for="gp">Grand Prix:</label>
+          <select id="gp" class="styled-select"></select>
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit">🏎️ Predict</button>
+          <button type="button" id="resetBtn">🔁 Reset</button>
+        </div>
+      </form>
+
+      <div id="loading" class="spinner hidden"></div>
+      <div id="errorBox" class="error hidden"></div>
+      <div id="resultsTableContainer" class="hidden">
+        <table id="resultsTable">
+          <thead>
+            <tr>
+              <th>Pos</th>
+              <th>Driver</th>
+              <th>Team</th>
+              <th>Lap Time</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
 
-      <div class="form-row">
-        <label for="gp">Grand Prix:</label>
-        <select id="gp" required></select>
+      <!-- Driver Popup Modal -->
+      <div id="driverModal" class="modal">
+        <div class="modal-content">
+          <span class="close-button">&times;</span>
+          <div class="modal-body" id="driverDetails">
+            <!-- Filled dynamically -->
+          </div>
+        </div>
       </div>
-
-      <div class="form-buttons">
-        <button type="submit">Predict</button>
-        <button type="button" id="resetBtn">Reset</button>
-      </div>
-    </form>
-
-    <div id="loading" class="spinner hidden"></div>
-    <div id="errorBox" class="error hidden"></div>
-    <div id="resultsTableContainer" class="hidden">
-      <table id="resultsTable">
-        <thead>
-          <tr>
-            <th>Predicted Position</th>
-            <th>Driver</th>
-            <th>Team</th>
-            <th>Lap Time</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
     </div>
 
-    <div id="driverDetails" class="side-panel hidden"></div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-
+    <script src="script.js"></script>
+  </body>
 </html>

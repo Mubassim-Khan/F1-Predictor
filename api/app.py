@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from predict import predict_race_positions
-from stats import get_driver_stats  # You’ll define this below
+from stats import get_driver_stats
 
 app = Flask(__name__)
 CORS(app)
