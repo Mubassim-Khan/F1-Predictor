@@ -163,27 +163,27 @@ document.addEventListener("click", async (e) => {
     }
 
     // Fallback images
-    const driverImage = `https://media.formula1.com/content/dam/fom-website/drivers/2024/${driverAbbr.toLowerCase()}.jpg`;
+    const driverImage = `/static/images/drivers/${driverAbbr.toLowerCase()}.png`;
     const fallbackDriverImage =
-      "https://media.formula1.com/content/dam/fom-website/drivers/NoImageAvailable.jpg";
+      "/static/images/drivers/driver-placeholder-image.png";
+
     const teamSlug = stats.team
       ? stats.team.replace(/[\s.]/g, "-").toLowerCase()
       : "";
-    const teamLogo = teamSlug
-      ? `https://media.formula1.com/content/dam/fom-website/teams/2024/${teamSlug}/logo.png`
-      : "";
-    const fallbackTeamLogo =
-      "https://media.formula1.com/content/dam/fom-website/teams/NoLogoAvailable.png";
+    const teamLogo = `/static/images/teams/${teamSlug}.png`;
+    const fallbackTeamLogo = "/static/images/teams/team-placeholder-image.png";
 
     driverDetails.innerHTML = `
       <img src="${driverImage}" alt="${driverAbbr}" onerror="this.onerror=null;this.src='${fallbackDriverImage}';" />
       <div class="driver-info">
-        <h2>${stats.full_name || driverAbbr}</h2>
-        <p><strong>Team:</strong> ${stats.team}</p>
-        <p><strong>Avg Q Position:</strong> ${
+        <h2>${driverFullNames[driverAbbr] || driverAbbr}</h2>
+        <p><strong>Avg Qualifying Position:</strong> ${
           stats.avg_q_pos ? Math.ceil(stats.avg_q_pos) : "-"
         }</p>
-        <p><strong>Avg Q3 Lap:</strong> ${formatLapTime(stats.avg_q3_lap)}</p>
+        <p><strong>Avg Q3 Lap Time:</strong> ${formatLapTime(
+          stats.avg_q3_lap
+        )}</p>
+        <p><strong>Team:</strong> ${stats.team}</p>
         <img src="${teamLogo}" alt="${
       stats.team
     }" style="margin-top: 10px;" onerror="this.onerror=null;this.src='${fallbackTeamLogo}';" />
