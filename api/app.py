@@ -12,6 +12,8 @@ def predict():
     data = request.get_json()
     try:
         prediction = predict_race_positions(data)
+        if isinstance(prediction, dict) and 'error' in prediction:
+            return jsonify(prediction), 400
         return jsonify(prediction)
     except Exception as e:
         return jsonify({'error': str(e)}), 500

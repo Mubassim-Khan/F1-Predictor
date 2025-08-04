@@ -1,7 +1,7 @@
 body {
   font-family: "Orbitron", sans-serif;
   margin: 0;
-  background-color: #0d0d0d;
+  background-color: #1b2136; /* Red Bull dark blue */
   color: #fff;
   padding: 20px;
 }
@@ -9,17 +9,17 @@ body {
 .container {
   max-width: 900px;
   margin: auto;
-  background: #1c1c1c;
+  background: #222a3a; /* Slightly lighter blue */
   padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 25px rgba(225, 214, 0, 0.25); /* Red Bull yellow accent */
 }
 
 h1 {
   text-align: center;
   margin-bottom: 25px;
-  color: #e10600;
-  text-shadow: 1px 1px 5px #000;
+  color: #ffd600; /* Red Bull yellow */
+  text-shadow: 1px 1px 8px #1b2136;
 }
 
 label {
@@ -31,32 +31,43 @@ label {
 .styled-select,
 select,
 button {
-  padding: 12px;
+  padding: 8px 12px;
   width: 100%;
   font-size: 1rem;
-  background-color: #222;
-  color: white;
-  border: 1px solid #ffcc00;
+  background-color: #232a3d;
+  color: #ffd600;
+  border: 1.5px solid #e10600;
   border-radius: 6px;
   transition: 0.3s ease-in-out;
 }
 
+select {
+  max-height: 120px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+select option {
+  padding: 8px 12px;
+}
+
 select:hover,
 .styled-select:hover {
-  border-color: #e10600;
-  box-shadow: 0 0 10px #e10600;
+  border-color: #ffd600;
+  box-shadow: 0 0 10px #ffd600;
 }
 
 button {
   background-color: #e10600;
   border: none;
   font-weight: bold;
+  color: #fff;
 }
 
 button:hover {
-  background-color: #ffcc00;
-  color: #111;
-  box-shadow: 0 0 10px #ffcc00;
+  background-color: #ffd600;
+  color: #1b2136;
+  box-shadow: 0 0 10px #ffd600;
 }
 
 .form-row {
@@ -70,13 +81,24 @@ button:hover {
 }
 
 .spinner {
-  margin-top: 20px;
+  margin: 40px auto 20px auto;
   border: 5px solid #444;
   border-top: 5px solid #e10600;
   border-radius: 50%;
-  width: 35px;
-  height: 35px;
+  width: 45px;
+  height: 45px;
   animation: spin 1s linear infinite;
+  display: block;
+  position: relative;
+  left: 0;
+  right: 0;
+}
+.loading-message {
+  text-align: center;
+  color: #ffd600;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  font-family: 'Orbitron', sans-serif;
 }
 
 @keyframes spin {
@@ -114,12 +136,12 @@ td {
 }
 
 th {
-  background: #222;
-  color: #ffcc00;
+  background: #232a3d;
+  color: #ffd600;
 }
 
 .driver-name {
-  color: #ffcc00;
+  color: #ffd600;
   cursor: pointer;
   text-decoration: underline;
 }
@@ -149,28 +171,34 @@ th {
 }
 
 .modal-content {
-  background-color: #1a1a1a;
+  background-color: #222a3a;
   padding: 30px;
   border-radius: 10px;
   width: 90%;
   max-width: 600px;
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 20px;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  box-shadow: 0 0 20px rgba(225, 214, 0, 0.35);
 }
 
 .modal-content img {
   width: 140px;
   height: auto;
   border-radius: 8px;
+  display: block;
+  margin: 0 auto;
 }
 
 .driver-info {
   display: flex;
   flex-direction: column;
-  color: white;
+  align-items: center;
+  color: #ffd600;
+  text-align: center;
 }
 
 .close-button {
@@ -178,7 +206,7 @@ th {
   top: 10px;
   right: 15px;
   font-size: 1.5rem;
-  color: white;
+  color: #ffd600;
   cursor: pointer;
 }
 

@@ -27,7 +27,7 @@ def predict_race_positions(data):
 
         # Check if session has data
         if session.laps.empty:
-            return jsonify({"error": f"No qualifying data available yet for {gp} {year}."}), 400
+            return {"error": f"No qualifying data available yet for {gp} {year}."}
 
         laps = session.laps.pick_quicklaps()
 
@@ -62,4 +62,4 @@ def predict_race_positions(data):
         return output
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return {"error": str(e)}

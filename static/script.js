@@ -5,6 +5,7 @@ const resultsContainer = document.getElementById("resultsTableContainer");
 const tableBody = document.querySelector("#resultsTable tbody");
 const errorBox = document.getElementById("errorBox");
 const loading = document.getElementById("loading");
+let loadingMsgTimeouts = [];
 const resetBtn = document.getElementById("resetBtn");
 const driverDetails = document.getElementById("driverDetails");
 
@@ -54,10 +55,11 @@ const predictCache = {};
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   errorBox.classList.add("hidden");
-  loading.classList.remove("hidden");
   resultsContainer.classList.add("hidden");
   driverDetails.classList.add("hidden");
   tableBody.innerHTML = "";
+  loading.classList.remove("hidden");
+  showLoadingMessages();
 
   const year = parseInt(yearSelect.value);
   const gp = gpSelect.value;
@@ -77,13 +79,33 @@ form.addEventListener("submit", async (e) => {
         }
       );
 
-      if (!res.ok) throw new Error("Failed to fetch prediction");
-      data = await res.json();
+      const result = await res.json();
+      if (!res.ok || result.error) {
+        // Custom error message for unavailable qualifying results
+        if (
+          result.error &&
+          result.error
+            .toLowerCase()
+            .includes("data you are trying to access has not been loaded yet")
+        ) {
+          errorBox.textContent =
+            "Qualifying results for this Grand Prix are not available yet. Please check back after the session.";
+        } else {
+          errorBox.textContent =
+            "❌ Inchident: " + (result.error || "Failed to fetch prediction");
+        }
+        errorBox.classList.remove("hidden");
+        loading.classList.add("hidden");
+        clearLoadingMessages();
+        return;
+      }
+      data = result;
       predictCache[cacheKey] = data;
     } catch (err) {
       errorBox.textContent = "❌ Inchident: " + err.message;
       errorBox.classList.remove("hidden");
       loading.classList.add("hidden");
+      clearLoadingMessages();
       return;
     }
   }
@@ -103,6 +125,7 @@ form.addEventListener("submit", async (e) => {
 
   resultsContainer.classList.remove("hidden");
   loading.classList.add("hidden");
+  clearLoadingMessages();
 });
 
 // Reset Button
@@ -111,7 +134,35 @@ resetBtn.addEventListener("click", () => {
   driverDetails.classList.add("hidden");
   errorBox.classList.add("hidden");
   tableBody.innerHTML = "";
+  loading.classList.add("hidden");
+  clearLoadingMessages();
 });
+
+// Loading spinner messages
+function showLoadingMessages() {
+  clearLoadingMessages();
+  let msg = document.createElement("div");
+  msg.className = "loading-message";
+  msg.textContent = "Fetching qualifying results...";
+  loading.parentNode.insertBefore(msg, loading.nextSibling);
+  loadingMsgTimeouts.push(
+    setTimeout(() => {
+      msg.textContent = "Crunching the numbers...";
+    }, 2500)
+  );
+  loadingMsgTimeouts.push(
+    setTimeout(() => {
+      msg.textContent = "Almost there...";
+    }, 4500)
+  );
+}
+
+function clearLoadingMessages() {
+  loadingMsgTimeouts.forEach((t) => clearTimeout(t));
+  loadingMsgTimeouts = [];
+  let msg = document.querySelector(".loading-message");
+  if (msg) msg.remove();
+}
 
 // Helper for lap time formatting
 function formatLapTime(seconds) {
