@@ -1,4 +1,5 @@
 flask
+flask_cors
 fastf1
 scikit-learn
 joblib

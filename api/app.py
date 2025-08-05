@@ -6,8 +6,12 @@ from stats import get_driver_stats
 from plot_circuit_map import plot_circuit_map
 from plot_gear_shifts_on_track import plot_gear_shifts
 
-app = Flask(__name__, static_folder='static')
+app = Flask(__name__, static_folder='../static', static_url_path='/')
 CORS(app)
+
+@app.route("/")
+def home():
+    return app.send_static_file("index.html")
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -35,7 +39,7 @@ def circuit_map():
     year = data.get('year')
     gp = data.get('gp')
     img_name = f"{year}_{gp.replace(' ', '_')}_circuit.png"
-    img_path = os.path.join('static', 'graphs', img_name)
+    img_path = os.path.join(app.static_folder, 'images', 'graphs', img_name)
     os.makedirs(os.path.dirname(img_path), exist_ok=True)
 
     # Only generate if not already existing
@@ -50,7 +54,7 @@ def gear_shifts():
     year = data.get('year')
     gp = data.get('gp')
     img_name = f"{year}_{gp.replace(' ', '_')}_gear.png"
-    img_path = os.path.join('static', 'graphs', img_name)
+    img_path = os.path.join(app.static_folder, 'images', 'graphs', img_name)
     os.makedirs(os.path.dirname(img_path), exist_ok=True)
 
     if not os.path.exists(img_path):
@@ -59,9 +63,9 @@ def gear_shifts():
     return jsonify({'img_url': url_for('serve_graph_image', filename=img_name)})
 
 # Route to serve cached images explicitly with cache headers
-@app.route('/static/graphs/<path:filename>')
+@app.route('/images/graphs/<path:filename>')
 def serve_graph_image(filename):
-    response = make_response(send_from_directory('static/graphs', filename))
+    response = make_response(send_from_directory(os.path.join(app.static_folder, 'images', 'graphs'), filename))
     response.headers['Cache-Control'] = 'public, max-age=86400'  # Cache for 1 day
     return response
 

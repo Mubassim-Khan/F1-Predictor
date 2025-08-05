@@ -2,18 +2,15 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/predict.py",
-      "use": "@vercel/python"
+      "src": "api/app.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
     }
   ],
   "routes": [
-    {
-      "src": "/api/predict",
-      "dest": "api/predict.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/index.html"
-    }
+    { "src": "/(.*\\.css|.*\\.js|.*\\.png|.*\\.jpg|.*\\.svg)", "dest": "/static/$1" },
+    { "src": "/(.*)", "dest": "/api/app.py" }
   ]
 }

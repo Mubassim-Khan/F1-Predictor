@@ -9,9 +9,7 @@ let loadingMsgTimeouts = [];
 const resetBtn = document.getElementById("resetBtn");
 const driverDetails = document.getElementById("driverDetails");
 
-const BackendURL =
-  "https://ideal-space-dollop-5g95v9qv9v4vcp477-5000.app.github.dev" ||
-  "http:localhost:5000";
+const BackendURL = "";
 
 // Populate year and GP options
 const currentYear = new Date().getFullYear();
@@ -285,15 +283,15 @@ document.addEventListener("click", async (e) => {
     }
 
     // Fallback images
-    const driverImage = `/static/images/drivers/${driverAbbr.toLowerCase()}.png`;
+    const driverImage = `/images/drivers/${driverAbbr.toLowerCase()}.png`;
     const fallbackDriverImage =
-      "/static/images/drivers/driver-placeholder-image.png";
+      "/images/drivers/driver-placeholder-image.png";
 
     const teamSlug = stats.team
       ? stats.team.replace(/[\s.]/g, "-").toLowerCase()
       : "";
-    const teamLogo = `/static/images/teams/${teamSlug}.png`;
-    const fallbackTeamLogo = "/static/images/teams/team-placeholder-image.png";
+    const teamLogo = `/images/teams/${teamSlug}.png`;
+    const fallbackTeamLogo = "/images/teams/team-placeholder-image.png";
 
     driverDetails.innerHTML = `
       <img src="${driverImage}" alt="${driverAbbr}" onerror="this.onerror=null;this.src='${fallbackDriverImage}';" />
