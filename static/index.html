@@ -13,6 +13,87 @@
 
   <body>
     <div class="container">
+      <div class="accordion" id="aboutAccordion" style="margin-bottom: 32px">
+        <button
+          class="accordion-toggle"
+          style="
+            width: 100%;
+            background: rgba(34, 42, 58, 0.85);
+            color: #ffd600;
+            font-size: 1.2rem;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+          "
+        >
+          <span style="font-weight: bold">About This F1 Prediction App</span>
+          <span style="float: right">&#9660;</span>
+        </button>
+        <div
+          class="accordion-content"
+          style="
+            display: none;
+            background: rgba(34, 42, 58, 0.85);
+            border-radius: 0 0 12px 12px;
+            padding: 24px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+          "
+        >
+          <p>
+            <strong>Machine Learning Model:</strong> This app uses Random Forest
+            Regressor Model, a regression-based machine learning model trained
+            on historical Formula 1 qualifying data. The model leverages
+            features such as driver, team, tyre compound, stint, sector times,
+            and grid position to predict qualifying positions and lap times. The
+            model is serialized using <code>joblib</code> and loaded in the
+            backend for fast inference.
+          </p>
+          <p>
+            <strong>Backend (Flask):</strong> The backend is built with
+            <a
+              href="https://flask.palletsprojects.com/"
+              target="_blank"
+              style="color: #e10600"
+              >Flask</a
+            >, a lightweight Python web framework. It exposes RESTful API
+            endpoints for predictions, driver stats, and dynamic circuit/gear
+            shift visualizations. The backend uses
+            <a
+              href="https://theoehrly.github.io/Fast-F1/"
+              target="_blank"
+              style="color: #ffd600"
+              >FastF1</a
+            >
+            to fetch and process real F1 telemetry and session data, and
+            <code>matplotlib</code> for generating circuit and gear shift graphs
+            on demand.
+          </p>
+          <p>
+            <strong>Frontend (HTML/CSS/JS):</strong> The frontend is a modern,
+            responsive web app styled with a Red Bull-inspired theme. It uses
+            vanilla JavaScript to interact with the backend, dynamically
+            populate dropdowns, display prediction results, and render
+            circuit/gear shift graphs. The UI features a blurred, darkened
+            background image, animated spinners, and interactive modals for
+            driver details. All graphs and images are loaded asynchronously for
+            a smooth user experience.
+          </p>
+          <p><strong>Technologies Used:</strong></p>
+          <ul style="margin-left: 24px">
+            <li><strong>Python</strong> (ML, data processing, backend)</li>
+            <li><strong>Flask</strong> (API server, static file serving)</li>
+            <li><strong>FastF1</strong> (F1 data and telemetry)</li>
+            <li><strong>Matplotlib</strong> (dynamic graph generation)</li>
+            <li><strong>HTML5/CSS3</strong> (responsive UI, theming)</li>
+            <li><strong>JavaScript</strong> (dynamic frontend, API calls)</li>
+            <li><strong>Joblib</strong> (model serialization)</li>
+          </ul>
+        </div>
+      </div>
       <h1>🏁 F1 Position & LapTime Predictor</h1>
 
       <form id="predictForm">
@@ -49,11 +130,31 @@
       </div>
       <div id="circuitMapContainer" class="hidden">
         <h2 id="circuitMapHeading"></h2>
-        <img id="circuitMapImg" src="" alt="Circuit Map" style="pointer-events:none;max-width:100%;margin:20px auto;display:block;" />
+        <img
+          id="circuitMapImg"
+          src=""
+          alt="Circuit Map"
+          style="
+            pointer-events: none;
+            max-width: 100%;
+            margin: 20px auto;
+            display: block;
+          "
+        />
       </div>
       <div id="gearShiftContainer" class="hidden">
         <h2 id="gearShiftHeading"></h2>
-        <img id="gearShiftImg" src="" alt="Gear Shift Map" style="pointer-events:none;max-width:100%;margin:20px auto;display:block;" />
+        <img
+          id="gearShiftImg"
+          src=""
+          alt="Gear Shift Map"
+          style="
+            pointer-events: none;
+            max-width: 100%;
+            margin: 20px auto;
+            display: block;
+          "
+        />
       </div>
 
       <!-- Driver Popup Modal -->

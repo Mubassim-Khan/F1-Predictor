@@ -1,3 +1,13 @@
+// Accordion logic for About section
+document.addEventListener("DOMContentLoaded", function() {
+  const accordionToggle = document.querySelector(".accordion-toggle");
+  const accordionContent = document.querySelector(".accordion-content");
+  accordionToggle.addEventListener("click", function() {
+    const isOpen = accordionContent.style.display === "block";
+    accordionContent.style.display = isOpen ? "none" : "block";
+    accordionToggle.querySelector("span:last-child").innerHTML = isOpen ? "&#9660;" : "&#9650;";
+  });
+});
 const yearSelect = document.getElementById("year");
 const gpSelect = document.getElementById("gp");
 const form = document.getElementById("predictForm");
@@ -175,6 +185,19 @@ resetBtn.addEventListener("click", () => {
   tableBody.innerHTML = "";
   loading.classList.add("hidden");
   clearLoadingMessages();
+  // Reset graph images and headings
+  const circuitMapContainer = document.getElementById("circuitMapContainer");
+  const circuitMapHeading = document.getElementById("circuitMapHeading");
+  const circuitMapImg = document.getElementById("circuitMapImg");
+  circuitMapContainer.classList.add("hidden");
+  circuitMapImg.src = "";
+  circuitMapHeading.textContent = "";
+  const gearShiftContainer = document.getElementById("gearShiftContainer");
+  const gearShiftHeading = document.getElementById("gearShiftHeading");
+  const gearShiftImg = document.getElementById("gearShiftImg");
+  gearShiftContainer.classList.add("hidden");
+  gearShiftImg.src = "";
+  gearShiftHeading.textContent = "";
 });
 
 // Loading spinner messages
