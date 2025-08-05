@@ -1,13 +1,3 @@
-// Accordion logic for About section
-document.addEventListener("DOMContentLoaded", function() {
-  const accordionToggle = document.querySelector(".accordion-toggle");
-  const accordionContent = document.querySelector(".accordion-content");
-  accordionToggle.addEventListener("click", function() {
-    const isOpen = accordionContent.style.display === "block";
-    accordionContent.style.display = isOpen ? "none" : "block";
-    accordionToggle.querySelector("span:last-child").innerHTML = isOpen ? "&#9660;" : "&#9650;";
-  });
-});
 const yearSelect = document.getElementById("year");
 const gpSelect = document.getElementById("gp");
 const form = document.getElementById("predictForm");
@@ -65,6 +55,19 @@ gps.forEach((gp) => {
 
 // Qualifying results cache
 const predictCache = {};
+
+// Accordion logic for About section
+document.addEventListener("DOMContentLoaded", function () {
+  const accordionToggle = document.querySelector(".accordion-toggle");
+  const accordionContent = document.querySelector(".accordion-content");
+  accordionToggle.addEventListener("click", function () {
+    const isOpen = accordionContent.style.display === "block";
+    accordionContent.style.display = isOpen ? "none" : "block";
+    accordionToggle.querySelector("span:last-child").innerHTML = isOpen
+      ? "&#9660;"
+      : "&#9650;";
+  });
+});
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -154,6 +157,9 @@ form.addEventListener("submit", async (e) => {
     .then((data) => {
       circuitMapHeading.textContent = `Circuit Map with Numbered Corners: ${gp}`;
       circuitMapImg.src = data.img_url;
+      console.log("Fetched:", data.img_url) 
+      circuitMapImg.onerror = () =>
+        console.error("❌ Failed to load circuit map image");
       circuitMapContainer.classList.remove("hidden");
     });
 
@@ -173,6 +179,9 @@ form.addEventListener("submit", async (e) => {
     .then((data) => {
       gearShiftHeading.textContent = `Gear Shifts Used Around the Circuit (Fastest Lap)`;
       gearShiftImg.src = data.img_url;
+      console.log("Fetched:", data.img_url) 
+      gearShiftImg.onerror = () =>
+        console.error("❌ Failed to load gear shift image");
       gearShiftContainer.classList.remove("hidden");
     });
 });
