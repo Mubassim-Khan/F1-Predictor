@@ -1,18 +1,33 @@
 body {
   font-family: "Orbitron", sans-serif;
   margin: 0;
-  background-color: #1b2136; /* Red Bull dark blue */
+  background: url('/static/images/redbull-rb19.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: #fff;
   padding: 20px;
+  position: relative;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
 }
 
 .container {
   max-width: 900px;
   margin: auto;
-  background: #222a3a; /* Slightly lighter blue */
+  background: rgba(34, 42, 58, 0.85); /* Slightly lighter blue, more transparent */
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 0 25px rgba(225, 214, 0, 0.25); /* Red Bull yellow accent */
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
