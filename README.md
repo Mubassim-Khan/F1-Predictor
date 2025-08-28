@@ -30,18 +30,9 @@
 
 ## <a name="introduction">Introduction</a>
 
-
-
-
-
-
 This project is a Formula 1 data science and machine learning dashboard that predicts driver race lap times and finishing positions based on Q3 (Qualifying data) data. It uses real-time telemetry data powered by FastF1 and displays insights with a custom-built Flask backend and a modern, dynamic frontend using vanilla JavaScript, HTML, and CSS.
 
 ## <a name="features">Features</a>
-
-
-
-
 
 🔍 **Predictive Insights**: Predicts qualifying lap time & race position using a trained machine learning model.
 

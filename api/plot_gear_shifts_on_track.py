@@ -6,6 +6,8 @@ Plot which gear is being used at which point of the track
 ##############################################################################
 # Import FastF1 and load the data
 
+import matplotlib
+matplotlib.use("Agg")  # Use non-GUI backend
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import colormaps
